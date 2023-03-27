@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+
+    <script type="text/javascript" src="js/rem.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <title>定位桩</title>
+<style type="text/css">
+/*resize*/
+.breathe-zct{ position:relative; width:20px; height:20px; top:2px;float:left;  border:1px solid #008000; border-radius:20px; color:#fff; font-size:10px; cursor:pointer; box-shadow:0 1px 2px rgba(0,0,0,.3); overflow:hidden; 
+		background-image: -webkit-gradient(linear, left top, left bottom, from(#00FF00), to(#00FF00));
+		background-image: -moz-linear-gradient(#00FF00,#00FF00);
+}
+
+.breathe-yct{ position:relative; width:20px; height:20px; top:2px;float:left;   border:1px solid #008000; border-radius:20px; color:#fff; font-size:20px;  cursor:pointer; box-shadow:0 1px 2px rgba(0,0,0,.3); overflow:hidden; 
+		background-image: -webkit-gradient(linear, left top, left bottom, from(#FF0000), to(#FF0000));
+		background-image: -moz-linear-gradient(#FF0000,#FF0000);
+}
+
+.breathe-zc{ position:relative; width:20px; height:20px; margin:10px auto; line-height:40px; border:1px solid #008000; border-radius:10px; color:#fff; font-size:20px; text-align:center; cursor:pointer; box-shadow:0 1px 2px rgba(0,0,0,.3); overflow:hidden; 
+		background-image: -webkit-gradient(linear, left top, left bottom, from(#00FF00), to(#00FF00));
+		background-image: -moz-linear-gradient(#00FF00,#00FF00);
+    -webkit-animation-timing-function: ease-in-out;
+    -webkit-animation-name: breathe;
+    -webkit-animation-duration: 500ms;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-direction: alternate;
+		animation:ease-in-out breathe 500ms infinite alternate; 
+}
+
+.dataAllBorder02{
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+.video_cage{
+    padding: 4px;
+    width: 100%;
+    object-fit: fill;
+}
+.video {
+    height: 100%;
+    width: 100%;
+}
+
+#three-canvas {
+  position: fixed;
+  top: 0;
+      text-align: center;
+  outline: none;
+}
+
+#file-input {
+  z-index: 1;
+  position: absolute;
+}
+
+.message-container {
+  z-index: 1;
+  position: absolute;
+  margin: 30px;
+  background-color:rgb(84, 132, 235);
+  display: inline-block;
+  padding: 30px;
+}
+
+.message {
+  display: inline;
+  color: black;
+}
+
+.imglistwrap{width: 100%;height:100%;}
+.imglist{width: 100%;padding: 0px;margin:0px;box-sizing: border-box;box-sizing: border-box;display: flex;display: -webkit-flex;-webkit-flex-wrap: wrap;flex-wrap: wrap;}
+.imglist li{width: 100%;margin-bottom: 0%;overflow: hidden;position: relative;cursor: pointer;}
+.imglist li .imgbox{width: 100%;overflow: hidden;height: 100%;}
+.imglist li .imgbox img{display: block;width: 100%;transition: all .6s;object-fit: cover;height: 100%;}
+.imglist li:hover .imgbox img{transform: scale(1.1);}
+.imglist li .text{width: 100%;height: 100%;position: absolute;top: 0;left: 0;background-color: rgba(0,0,0,0.3);opacity: 0;transition: all .3s;display: flex;display: -webkit-flex;-webkit-justify-content: center;justify-content: center;-webkit-align-items: center;align-items: center;}
+.imglist li:hover .text{opacity: 1;}
+.imglist li .text i{font-size: 20px;color: #FFFFFF;opacity: 0;transition: all .3s;transform: translateY(-100%);-webkit-transform: translateY(-100%);}
+.imglist li:hover .text i{opacity: 1;transform: none;-webkit-transform: none;}
+
+/* maskweap */
+.maskweap{width: 100%;height: 100%;position: fixed;top: 0;left: 0;background-color: rgba(0,0,0,0.8);z-index:1;display: flex;display: -webkit-flex;-webkit-justify-content: center;justify-content: center;-webkit-align-items: center;align-items: center;display: none;}
+.maskweap .imgshow{width: 100%;box-sizing: border-box;height: 100%;display: flex;display: -webkit-flex;-webkit-align-items: center;align-items: center;-webkit-justify-content: center;justify-content: center;}
+.maskweap .imgshow img{display: block;width:auto;max-width: 28%;box-sizing: border-box;padding: 10px;background-color: #FFFFFF;}
+
+@keyframes breathe{
+	0% { opacity: .2; box-shadow:0 1px 2px rgba(255,255,255,0.1);}
+    100% { opacity: 1; border:1px solid rgba(59,235,235,1); box-shadow:0 1px 30px rgba(59,255,255,1);}
+}
+@-webkit-keyframes breathe {
+    0% { opacity: .2; box-shadow:0 1px 2px rgba(255,255,255,0.1);}
+    100% { opacity: 1; border:1px solid rgba(59,235,235,1); box-shadow:0 1px 30px rgba(59,255,255,1);}
+}
+
+.breathe-yc{ position:relative; width:20px; height:20px; margin:10px auto; line-height:40px; border:1px solid #008000; border-radius:10px; color:#fff; font-size:20px; text-align:center; cursor:pointer; box-shadow:0 1px 2px rgba(0,0,0,.3); overflow:hidden; 
+		background-image: -webkit-gradient(linear, left top, left bottom, from(#FF0000), to(#FF0000));
+		background-image: -moz-linear-gradient(#FF0000,#FF0000);
+    -webkit-animation-timing-function: ease-in-out;
+    -webkit-animation-name: breathe;
+    -webkit-animation-duration: 1000ms;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-direction: alternate;
+		animation:ease-in-out breathe 100ms infinite alternate; 
+}
+@keyframes breathe{
+	0% { opacity: .2; box-shadow:0 1px 2px rgba(255,255,255,0.1);}
+    100% { opacity: 1; border:1px solid rgba(59,235,235,1); box-shadow:0 1px 30px rgba(59,255,255,1);}
+}
+@-webkit-keyframes breathe {
+    0% { opacity: .2; box-shadow:0 1px 2px rgba(255,255,255,0.1);}
+    100% { opacity: 1; border:1px solid rgba(59,235,235,1); box-shadow:0 1px 30px rgba(59,255,255,1);}
+}
+</style>
+<script  type="text/javascript">
+	window.onload = function() {
+		var local1=document.getElementById('videoID');  //获取，函数执行完成后local内存释放
+		local1.autoplay = true; // 自动播放
+		local1.loop = true; // 循环播放
+		local1.muted=true; // 关闭声音，如果为false,视频无法自动播放
+		if(local1.paused){  //判断是否处于暂停状态
+			local1.play();  //开启播放
+	    }else{
+			local1.pause();  //停止播放
+	    }
+    }
+
+    function btn(){
+		var local=document.getElementById('videoID');  //获取，函数执行完成后local内存释放
+		if(local.paused){  //判断是否处于暂停状态
+			local.play();  //开启播放
+	    }else{
+			local.pause();  //停止播放
+	    }
+	}
+	</script>
+
+<script type="text/javascript">
+			$(function(){
+
+				$(".imglist li").click(function(){
+					// 获取当前图片的src
+					var src=$(this).find(".imgbox img").attr('src');
+					//添加到弹窗img
+					$(".bigimg").attr("src",src);
+					// 显示弹窗
+					$(".maskweap").fadeIn();
+				});
+				// 点击盒子以外的地方弹窗关闭
+				$(document).mousedown(function(e) {
+					if ($(e.target).parent(".imgshow").length == 0) {
+						$(".maskweap").fadeOut(); //弹窗关闭
+					}
+				});
+			})
+		</script><!-- 缩略图 -->
+
+</head>
+
+<body style="visibility: hidden;">
+    <div class="container-flex" tabindex="0" hidefocus="true">
+        <div class="box-left">
+            <div class="left-top">
+                <div class="current-num">
+                    <table class="table3" style="border:0px; width:96%">
+						<thead>
+							<tr>
+								<th ><h6 style="font-size:0.2rem;color: #cdddf7;">状态</h6></th>
+								<th  style="text-align:left;"><div  class="breathe-zct"></div>&nbsp;&nbsp;正常</th>
+								<th style="text-align:left"><div  class="breathe-yct"></div>&nbsp;&nbsp;异常</th>
+							</tr>
+						</thead>
+						<tbody style="border:0px;">
+	<!--<tr><td colspan="4"><p style="width:9.6rem;">暂无数据</p></td></tr>-->
+					 
+					   <tr style="border:0px;">
+						   <td style="border:0px;"><div id="dx" class="breathe-zc"></div></td>
+						   <td style="border:0px;"><div id="cz" class="breathe-zc"></td>
+						   <td style="border:0px;"><div id="dmt" class="breathe-yc"></td>
+					   </tr>
+					   <tr style="border:0px;">
+						   <td style="border:0px;">1</td>
+						   <td style="border:0px;">2</td>
+						   <td style="border:0px;">3</td>
+					   </tr>
+					  
+						</tbody>
+					</table>
+                </div>
+            </div>
+            <div class="left-center">
+                <div class="title-box">
+                    <h6>表一</h6>
+                </div>
+                <div class="chart-box pie-chart" style="top:0px;">
+                    <div id="qdtj" style="width:100%;"></div>
+                    
+                </div>
+            </div>
+            <div class="left-bottom" class="select">
+                <div class="title-box">
+                    <h6>表二</h6>
+                    
+                </div>
+                    <div class="chart-box pie-chart" style="top:0px;">
+						<div id="jbtj" style="width:100%;"></div>
+					</div>
+                
+            </div>
+        </div>
+        <div class="box-center">
+            <div class="center-top">
+                <h1 style="margin-top:15px">定位桩</h1>
+            </div>
+            <div class="center-center">
+                <div class="weather-box">
+                    <div class="data">
+                        <p class="time" id="time">00:00:00</p>
+                        <p id="date"></p>
+                    </div>
+                    <div >
+                        <div >
+                            <p style="font-size:18px;color:#cdddf7">定位桩模型</p>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="center-bottom">
+            <div class="message-container">
+              <h2 class="message">信息:</h2>
+              <h2 class="message" id="id-output">None</h2>
+            </div>
+            <canvas id="three-canvas"></canvas>
+            <script src="bundle.js"></script>
+            </div>
+
+			<div class="center-bottom-two">
+                <div class="chart-box pie-chart"  style="top:8px;" >
+						<div id="areatj" style="width:100%;"></div>
+					</div>
+            </div>
+
+        </div>
+        <div class="box-right">
+            <div class="right-top">
+                <div class="title-box">
+                    <h6 id="barTitle">视频</h6>
+                </div>
+                <div class="data-box" style="padding:15px ;">
+                    <div class="video_show" >
+            <video autoplay="autoplay" loop="loop" class="dataAllBorder02 video_cage " id="videoID" controls="controls">
+            <source class="video" title="主监控位" src="images/1.mp4" />
+            </video>
+        </div>
+                
+            </div>
+            
+            
+            <div class="right-bottom">
+                <div class="title-box">
+                	<p id="switchBtn"><span class="active" data-dataType="income">图片展示</span></p>
+                    
+                </div>
+                <div class="img_table" style="margin-top: 7%">
+            <table width="100%" border="3" cellpadding="0" cellspacing="0"  >
+                <tr>
+                    <th>
+                             <div class="imglistwrap">
+                       <ul class="imglist">
+                           <li>
+                               <div class="imgbox">
+				                   <img src="images/Y方向弯曲应力云图.png" title="Y方向弯曲应力云图"/>
+			                   </div>
+                           </li>
+                       </ul>
+                   </div>
+                   <div class="maskweap">
+	               <div class="imgshow">
+		           <img src="" class="bigimg" />
+	               </div>
+                   </div>
+
+
+                    <th>
+                             <div class="imglistwrap">
+                       <ul class="imglist">
+                           <li>
+                               <div class="imgbox">
+				                   <img src="images/Y方向剪应力云图.png" title="Y方向剪应力云图"/>
+			                   </div>
+                           </li>
+                       </ul>
+                   </div>
+                   <div class="maskweap">
+	               <div class="imgshow">
+		           <img src="" class="bigimg" />
+	               </div>
+                   </div>
+
+
+                    <th>
+                             <div class="imglistwrap">
+                       <ul class="imglist">
+                           <li>
+                               <div class="imgbox">
+				                   <img src="images/Z方向弯曲应力云图.png" title="Z方向弯曲应力云图" />
+			                   </div>
+                           </li>
+                       </ul>
+                   </div>
+                   <div class="maskweap">
+	               <div class="imgshow">
+		           <img src="" class="bigimg" />
+	               </div>
+                   </div>
+                </tr>
+                <tr>
+                    <th>
+                             <div class="imglistwrap">
+                       <ul class="imglist">
+                           <li>
+                               <div class="imgbox">
+				                   <img src="images/Z方向剪应力云图.png" title="Z方向剪应力云图"/>
+			                   </div>
+                           </li>
+                       </ul>
+                   </div>
+                   <div class="maskweap">
+	               <div class="imgshow">
+		           <img src="" class="bigimg" />
+	               </div>
+                   </div>
+
+                    <th>
+                             <div class="imglistwrap">
+                       <ul class="imglist">
+                           <li>
+                               <div class="imgbox">
+				                   <img src="images/位移图.png" title="位移图" />
+			                   </div>
+                           </li>
+                       </ul>
+                   </div>
+                   <div class="maskweap">
+	               <div class="imgshow">
+		           <img src="" class="bigimg" />
+	               </div>
+                   </div>
+
+                    <th>
+                             <div class="imglistwrap">
+                       <ul class="imglist">
+                           <li>
+                               <div class="imgbox">
+
+				                   <img src="images/正应力云图.png" title="正应力云图"/>
+
+			                   </div>
+                           </li>
+                       </ul>
+                   </div>
+                   <div class="maskweap">
+	               <div class="imgshow">
+		           <img src="" class="bigimg" />
+	               </div>
+                   </div>
+
+                </tr>
+            </table>
+            </div>
+                
+            </div>
+        </div>
+    </div>
+
+</body>
+<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="js/layer/layer.min.js"></script>
+<script type="text/javascript" src="js/layer/laydate/laydate.js"></script>
+<script type="text/javascript" src="js/echarts.min.js"></script>
+<script type="text/javascript" src="js/china.js"></script>
+<script type="text/javascript" src="js/infographic.js"></script>
+<script type="text/javascript" src="js/macarons.js"></script>
+<script type="text/javascript" src="js/shine.js"></script>
+<script type="text/javascript" src="js/base.js"></script>
+
+<script type="text/javascript">
+    $('document').ready(function () {
+        $("body").css('visibility', 'visible');
+        var localData = [$('#teacher').val(), $('#start').val() + '/' + $('#end').val(), $('#leader').val()]
+        localStorage.setItem("data", localData);
+        
+		//设置渠道状态
+		qdzt();
+    })
+	
+	//设置渠道状态
+	function qdzt(){
+		//breathe-zc 绿灯；breathe-yc 红灯
+		$("#dx").removeClass("breathe-yc");
+		$("#dx").addClass("breathe-zc");
+
+		$("#cz").removeClass("breathe-zc");
+		$("#cz").addClass("breathe-yc");
+
+		$("#dmt").removeClass("breathe-yc");
+		$("#dmt").addClass("breathe-zc");
+	}
+</script>
+
+</html>
